@@ -6,26 +6,31 @@ import (
 
 func TestGetAllRecipes(t *testing.T) {
 	recipes := getAllRecipes()
-	if len(recipes) != 0 {
-		t.Errorf("Expected 0 recipes, got %d", len(recipes))
-	}
-
-	newRecipe := Recipe{ID: 1, Title: "Test Recipe", Ingredients: "Test Ingredients", Instructions: "Test Instructions"}
-	addRecipe(newRecipe)
-
-	recipes = getAllRecipes()
 	if len(recipes) != 1 {
 		t.Errorf("Expected 1 recipe, got %d", len(recipes))
 	}
 
-	if recipes[0].ID != newRecipe.ID || recipes[0].Title != newRecipe.Title || recipes[0].Ingredients != newRecipe.Ingredients || recipes[0].Instructions != newRecipe.Instructions {
-		t.Errorf("Expected recipe %+v, got %+v", newRecipe, recipes[0])
+	macaroniCheese := getMacaroniCheeseRecipe()
+	if recipes[0].ID != macaroniCheese.ID || recipes[0].Title != macaroniCheese.Title || recipes[0].Ingredients != macaroniCheese.Ingredients || recipes[0].Instructions != macaroniCheese.Instructions {
+		t.Errorf("Expected recipe %+v, got %+v", macaroniCheese, recipes[0])
+	}
+
+	newRecipe := Recipe{ID: 2, Title: "Test Recipe", Ingredients: "Test Ingredients", Instructions: "Test Instructions"}
+	addRecipe(newRecipe)
+
+	recipes = getAllRecipes()
+	if len(recipes) != 2 {
+		t.Errorf("Expected 2 recipes, got %d", len(recipes))
+	}
+
+	if recipes[1].ID != newRecipe.ID || recipes[1].Title != newRecipe.Title || recipes[1].Ingredients != newRecipe.Ingredients || recipes[1].Instructions != newRecipe.Instructions {
+		t.Errorf("Expected recipe %+v, got %+v", newRecipe, recipes[1])
 	}
 }
 
 func TestAddRecipe(t *testing.T) {
 	initialRecipes := getAllRecipes()
-	newRecipe := Recipe{ID: 2, Title: "Another Test Recipe", Ingredients: "More Test Ingredients", Instructions: "More Test Instructions"}
+	newRecipe := Recipe{ID: 3, Title: "Another Test Recipe", Ingredients: "More Test Ingredients", Instructions: "More Test Instructions"}
 	addRecipe(newRecipe)
 
 	recipes := getAllRecipes()

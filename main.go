@@ -27,4 +27,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "<li>%s</li>", recipe.Title)
 	}
 	fmt.Fprintf(w, "</ul>")
+	fmt.Fprintf(w, `<a href="/recipes">View All Recipes</a>`)
+	fmt.Fprintf(w, `<a href="/recipes/add" style="position: absolute; top: 10px; right: 10px;">Add Recipe</a>`)
 }

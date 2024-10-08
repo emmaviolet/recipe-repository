@@ -9,6 +9,11 @@ type Recipe struct {
 
 var recipes []Recipe
 
+func init() {
+	macaroniCheese := getMacaroniCheeseRecipe()
+	addRecipe(macaroniCheese)
+}
+
 func getAllRecipes() []Recipe {
 	return recipes
 }
