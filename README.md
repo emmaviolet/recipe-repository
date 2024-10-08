@@ -2,20 +2,22 @@
 
 This repository contains a cookbook or recipe tutorial application written in Go. It provides a simple HTTP server to manage and serve recipes.
 
-## Usage
+## Setup Instructions
 
-1. Clone the repository:
+1. Ensure you have Go installed on your machine. You can download it from [https://golang.org/dl/](https://golang.org/dl/).
+2. Clone the repository:
    ```
-   git clone https://github.com/githubnext/workspace-blank.git
+   git clone https://github.com/emmaviolet/recipe-repository.git
    ```
-2. Navigate to the project directory:
+3. Navigate to the project directory:
    ```
-   cd workspace-blank
+   cd recipe-repository
    ```
-3. Run the application:
+4. Run the application:
    ```
    go run main.go
    ```
+5. Open your web browser and go to [http://localhost:8080](http://localhost:8080) to access the application.
 
 ## Contributing
 
