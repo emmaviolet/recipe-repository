@@ -1,22 +1,42 @@
 package main
 
 import (
-	"encoding/json"
-	"net/http"
+    "encoding/json"
+    "fmt"
+    "net/http"
 )
 
 func listRecipesHandler(w http.ResponseWriter, r *http.Request) {
-	recipes := getAllRecipes()
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(recipes)
+    recipes := getAllRecipes()
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(recipes)
 }
 
 func addRecipeHandler(w http.ResponseWriter, r *http.Request) {
-	var newRecipe Recipe
-	if err := json.NewDecoder(r.Body).Decode(&newRecipe); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	addRecipe(newRecipe)
-	w.WriteHeader(http.StatusCreated)
+    if r.Method == http.MethodGet {
+        w.Header().Set("Content-Type", "text/html")
+        fmt.Fprintf(w, `
+            <h1>Add a New Recipe</h1>
+            <form action="/recipes/add" method="post">
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="title"><br>
+                <label for="ingredients">Ingredients:</label><br>
+                <textarea id="ingredients" name="ingredients"></textarea><br>
+                <label for="instructions">Instructions:</label><br>
+                <textarea id="instructions" name="instructions"></textarea><br>
+                <input type="submit" value="Add Recipe">
+            </form>
+        `)
+        return
+    }
+
+    if r.Method == http.MethodPost {
+        var newRecipe Recipe
+        if err := json.NewDecoder(r.Body).Decode(&newRecipe); err != nil {
+            http.Error(w, err.Error(), http.StatusBadRequest)
+            return
+        }
+        addRecipe(newRecipe)
+        w.WriteHeader(http.StatusCreated)
+    }
 }
