@@ -31,11 +31,18 @@ func addRecipeHandler(w http.ResponseWriter, r *http.Request) {
     }
 
     if r.Method == http.MethodPost {
-        var newRecipe Recipe
-        if err := json.NewDecoder(r.Body).Decode(&newRecipe); err != nil {
-            http.Error(w, err.Error(), http.StatusBadRequest)
+        err := r.ParseForm()
+        if err != nil {
+            http.Error(w, "Unable to parse form", http.StatusBadRequest)
             return
         }
+
+        newRecipe := Recipe{
+            Title:        r.FormValue("title"),
+            Ingredients:  r.FormValue("ingredients"),
+            Instructions: r.FormValue("instructions"),
+        }
+
         addRecipe(newRecipe)
         w.WriteHeader(http.StatusCreated)
     }
